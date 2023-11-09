@@ -1,9 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ include "cnninfer.fullname" . }}-test-connection"
+  name: "{{ .Values.webapp.name }}-test-connection"
   labels:
-    {{- include "cnninfer.labels" . | nindent 4 }}
+    app: cnninfer
+    component: test
   annotations:
     "helm.sh/hook": test
 spec:
@@ -11,5 +12,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "cnninfer.fullname" . }}:{{ .Values.webapp.service.port }}/healthz']
+      args: ['{{ .Values.webapp.name }}:{{ .Values.webapp.service.port }}/healthz']
   restartPolicy: Never

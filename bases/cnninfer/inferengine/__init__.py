@@ -1,4 +1,4 @@
-from cnninfer.inferengine import core
+from cnninfer.inferengine.core import broker
 
-__all__ = ["core"]
+__all__ = ["broker"]
 

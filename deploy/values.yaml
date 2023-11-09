@@ -1,6 +1,11 @@
 imagePullSecrets: []
 
 webapp:
+  name: webapp
+  labels:
+    app: cnninfer
+    component: webapp
+
   image:
     repository: islam25/webapp
     pullPolicy: IfNotPresent
@@ -26,14 +31,21 @@ webapp:
     targetMemoryUtilizationPercentage: 80
 
 inferengine:
+
+  models:
+    humanName: #name of huggingface model   (tag is the metadata.name, value is for the job for downloading and bs)
+    # Delete HPA/Service 
+
+  name: inferengine
+  labels:
+    app: cnninfer
+    component: inferengine
+    
   image:
     repository: islam25/inferengine
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: ""
-
-  service:
-    port: 8000
 
   resources: 
     limits:

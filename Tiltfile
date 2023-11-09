@@ -5,4 +5,4 @@ k8s_yaml(helm('deploy'), allow_duplicates=True)
 docker_build('islam25/webapp', '.', dockerfile='./projects/webapp/Dockerfile')
 docker_build('islam25/inferengine', '.', dockerfile='./projects/inferengine/Dockerfile')
 
-k8s_resource('chart-cnninfer:deployment:default:apps:0', port_forwards=8000)
+k8s_resource('webapp', port_forwards=8000)

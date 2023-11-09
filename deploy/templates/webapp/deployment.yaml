@@ -1,16 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cnninfer.fullname" . }}
-  labels:
-    {{- include "cnninfer.labels" . | nindent 4 }}
+  name: {{ .Values.webapp.name }}
+  labels: {{ .Values.webapp.labels | toYaml | nindent 4}}
 spec:
   {{- if not .Values.webapp.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "cnninfer.selectorLabels" . | nindent 6 }}
+      {{ .Values.webapp.labels | toYaml | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +17,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "cnninfer.labels" . | nindent 8 }}
+        {{ .Values.webapp.labels | toYaml| nindent 8 }}
 	{{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}

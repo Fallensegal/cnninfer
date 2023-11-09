@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cnninfer.fullname" . }}
+  name: {{ .Values.inferengine.name }}
   labels:
-    {{- include "cnninfer.labels" . | nindent 4 }}
+    {{ .Values.inferengine.labels | toYaml | nindent 4 }}
 spec:
   {{- if not .Values.inferengine.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "cnninfer.selectorLabels" . | nindent 6 }}
+      {{ .Values.inferengine.labels | toYaml | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "cnninfer.labels" . | nindent 8 }}
+        {{ .Values.inferengine.labels | toYaml | nindent 8 }}
 	{{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -33,18 +33,6 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.inferengine.image.repository }}:{{ .Values.inferengine.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.inferengine.image.pullPolicy }}
-          ports:
-            - name: http
-              containerPort: {{ .Values.inferengine.service.port }}
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /healthz
-              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.volumeMounts }}

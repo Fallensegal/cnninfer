@@ -1,4 +1,4 @@
-from cnninfer.webapp import core
+from cnninfer.webapp.core import app
 
-__all__ = ["core"]
+__all__ = ["app"]
 
