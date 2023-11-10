@@ -5,6 +5,7 @@
 - [Overview](#overview)
 - [Pre-requisites](#pre-requisites)
 - [Start the Application](#starting-the-application)
+- [Reference](#reference)
 
 
 ## Overview
@@ -35,8 +36,6 @@ CNN-Infer is an experimental deployment exploring the use of modern infrastructu
 
 > **Note**: I will be assuming the user OS is `MacOS` or `Linux`. As a result, the directions will be specific to the respective OS
 
-> **Note**: 
-
 1. Install the pre-requisites
 2. Clone this application repo: https://github.com/Fallensegal/cnninfer
 3. Install `Helm` dependencies:
@@ -47,7 +46,7 @@ CNN-Infer is an experimental deployment exploring the use of modern infrastructu
     helm repo add bitnami https://charts.bitnami.com/bitnami
     helm repo update
     ```
-    - Install `Helm` dependencies
+    - Build `Helm` dependencies
 
     ```bash
     helm dependency build ./deploy
@@ -76,10 +75,35 @@ CNN-Infer is an experimental deployment exploring the use of modern infrastructu
 
 5. Start the application
 
+    ```bash
+    tilt up
+    ```
+    *Expected Output*
+    ```bash
+    Tilt started on http://localhost:10350/
+    v0.33.6, built 2023-09-29
 
-## Docs
-The official Polylith documentation:
-[high-level documentation](https://polylith.gitbook.io/polylith)
+    (space) to open the browser
+    (s) to stream logs (--stream=true)
+    (t) to open legacy terminal mode (--legacy=true)
+    (ctrl-c) to exit
 
-A Python implementation of the Polylith tool:
-[python-polylith](https://github.com/DavidVujic/python-polylith)
+    ```
+    - You can visit `localhost:10350` on a web-browser to check on the deployment building. When all deployment resources are ready, navigate to `localhost:8000` to access the application.
+    
+## Reference
+
+### Application Dependencies
+
+1. **Infrastructure**
+    - Dependency Management: [Poetry](https://python-poetry.org/), [Polylith](https://davidvujic.github.io/python-polylith-docs/)
+    - Environment Standardization: [Containerization (Docker)](https://www.docker.com/)
+    - Deployment Orchestration: [Kubernetes (Minikube)](https://kubernetes.io/)
+
+2. **Application**
+    - Web Application (Backend): [FastAPI](https://fastapi.tiangolo.com/)
+    - Web Application (Front-end): [HTML/CSS]()
+    - Database/Task Queue: [Redis](https://redis.io/)
+    - Task Runners: [Dramatiq](https://dramatiq.io/)
+    - Inference Engine: [PyTorch](https://pytorch.org/), [MMDetection](https://github.com/open-mmlab/mmdetection) 
+
