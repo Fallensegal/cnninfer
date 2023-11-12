@@ -1,5 +1,8 @@
 [virtualenvs]
 in-project = true
 [virtualenvs.options]
-no-pip = true
-no-setuptools = true
+no-pip = false
+no-setuptools = false
+
+[repositories.pytorch]
+url = "https://download.pytorch.org/whl/cpu"
