@@ -36,6 +36,14 @@ spec:
             - name: http
               containerPort: {{ .Values.webapp.service.port }}
               protocol: TCP
+          env:
+            {{- range .Values.inferengine.env }}
+            - name: {{ .name}}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .valueFrom.secretKeyRef.name }}
+                  key: {{ .valueFrom.secretKeyRef.key }}
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /healthz

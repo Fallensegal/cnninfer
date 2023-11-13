@@ -30,6 +30,14 @@ webapp:
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
 
+  env:
+   - name: REDIS_PASSWORD
+     valueFrom:
+       secretKeyRef:
+        name: chart-redis
+        key: redis-password
+
+
 inferengine:
 
   models:
@@ -61,4 +69,11 @@ inferengine:
     maxReplicas: 100
     targetCPUUtilizationPercentage: 80
     targetMemoryUtilizationPercentage: 80
+
+  env:
+   - name: REDIS_PASSWORD
+     valueFrom:
+       secretKeyRef:
+        name: chart-redis
+        key: redis-password
 
