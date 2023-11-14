@@ -7,6 +7,10 @@ readme = "README.md"
 packages = [
     {include = "cnninfer/inferengine",from = "bases"},
     {include = "cnninfer/webapp",from = "bases"},
+    {include = "cnninfer/broker",from = "components"},
+    {include = "cnninfer/tasks",from = "components"},
+    {include = "cnninfer/storage",from = "components"},
+    {include = "cnninfer/coco",from = "components"},
 ]
 
 [tool.poetry.dependencies]
@@ -24,12 +28,14 @@ fastapi = "^0.104.1"
 uvicorn = {extras = ["standard"], version = "^0.24.0.post1"}
 pydantic = "^2.4.2"
 pydantic-settings = "^2.0.3"
+minio = "^7.2.0"
 
 
 [tool.poetry.group.worker.dependencies]
 pydantic = "^2.4.2"
 dramatiq = {extras = ["redis"], version = "^1.15.0"}
 pydantic-settings = "^2.0.3"
+minio = "^7.2.0"
 
 
 
@@ -38,6 +44,7 @@ torch = {version = "^2.1.0+cpu", source = "pytorch-cpu"}
 torchvision = {version = "^0.16.0+cpu", source = "pytorch-cpu"}
 torchaudio = {version = "^2.1.0+cpu", source = "pytorch-cpu"}
 openmim = "^0.3.9"
+minio = "^7.2.0"
 
 [[tool.poetry.source]]
 name = "pytorch-cpu"

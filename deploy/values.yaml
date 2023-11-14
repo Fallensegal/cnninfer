@@ -76,4 +76,14 @@ inferengine:
        secretKeyRef:
         name: chart-redis
         key: redis-password
+   - name: MINIO_USER
+     valueFrom:
+      secretKeyRef:
+        name: chart-minio
+        key: root-user
+   - name: MINIO_PASSWORD
+     valueFrom:
+      secretKeyRef:
+        name: chart-minio
+        key: root-password
 
