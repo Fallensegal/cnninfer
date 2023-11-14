@@ -1,5 +1,5 @@
-from cnninfer.storage import core
+from cnninfer.storage import s3storage
 
 
 def test_sample():
-    assert core is not None
+    assert s3storage is not None

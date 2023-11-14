@@ -1,5 +1,5 @@
-from cnninfer.tasks import core
+from cnninfer.tasks import tasks
 
 
 def test_sample():
-    assert core is not None
+    assert tasks is not None

@@ -1,4 +1,4 @@
-from cnninfer.tasks import core
+from cnninfer.tasks import tasks
 
-__all__ = ["core"]
+__all__ = ["tasks"]
 

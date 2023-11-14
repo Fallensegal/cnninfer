@@ -1,36 +1,28 @@
-from pydantic import BaseModel
+
 from fastapi import FastAPI
+from fastapi import APIRouter
 from dramatiq import group
-from datetime import timedelta
 from components.cnninfer.broker import broker
-from components.cnninfer.tasks import core
+from cnninfer.tasks import tasks
 
 app = FastAPI()
-
-class Annotations(BaseModel):
-    label: str
-    confidence: float
-class ExperimentData(BaseModel):
-    processing_time: timedelta
-    picture_label: list[Annotations]
-class ExperimentResult(BaseModel):
-    before_picture: bytes
-    after_picture: bytes
-    experiment_data: ExperimentData
-class ExperimentResponse(BaseModel):
-    result: list[ExperimentResult]
+storage_router = APIRouter(prefix="/storage", tags=["storage"])
+coco_router = APIRouter(prefix="/coco", tags=["coco"])
 
 @app.get("/healthz")
 async def health_check() -> dict[str, str]:
     return {"status": "ok"}
 
-@app.post("/storage/initialize")
-def initialize_coco_dataset_subset() -> str:
-    msg = core.prepare_inference_experiment.send()
-    return msg.get_result(timeout=10_000, block=True)
-
 @app.post("/greet")
 def greet_users(names: list[str]) -> list[str]:
-    g = group([core.hello.send("Wasif"), core.hello.send("Tory")]).run()
+    g = group([tasks.hello.send("Wasif"), tasks.hello.send("Tory")]).run()
     return g.get_results(timeout=10_000, block=True)
+
+@storage_router.get("/initialize")
+def initialize_s3_bucket() -> str:
+    msg = tasks.prepare_s3_buckets.send()
+    return msg.get_result(timeout=10_000, block=True)
+
+app.include_router(storage_router)
+app.include_router(coco_router)
 

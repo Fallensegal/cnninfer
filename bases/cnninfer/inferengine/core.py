@@ -1,2 +1,2 @@
 from components.cnninfer.broker import broker
-from components.cnninfer.tasks import core
+from cnninfer.tasks import tasks
