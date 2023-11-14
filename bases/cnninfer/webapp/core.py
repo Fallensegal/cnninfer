@@ -19,8 +19,8 @@ def greet_users(names: list[str]) -> list[str]:
     return g.get_results(timeout=10_000, block=True)
 
 @storage_router.get("/initialize")
-def initialize_s3_bucket() -> str:
-    msg = tasks.prepare_s3_buckets.send()
+def initialize_coco_dataset() -> str:
+    msg = tasks.prepare_coco_dataset.send()
     return msg.get_result(timeout=10_000, block=True)
 
 app.include_router(storage_router)

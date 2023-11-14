@@ -10,7 +10,7 @@ def hello(name: str) -> str:
 
 
 @dramatiq.actor(store_results=True)
-def prepare_s3_buckets() -> str:
+def prepare_coco_dataset() -> str:
     print(s3storage.create_bucket(s3storage.minio_client, "annotation"))
     print(s3storage.create_bucket(s3storage.minio_client, "images"))
 

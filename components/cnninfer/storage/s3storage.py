@@ -36,7 +36,7 @@ def upload_file_from_fs(
     minio_client.fput_object(bucket_name, obj_name, file_path)
 
 
-def download_file_from_bucket(minio_client: Minio, bucket_name: str, object_name: str):
+def download_file_from_bucket(minio_client: Minio, bucket_name: str, object_name: str) -> None:
     ...
 
 

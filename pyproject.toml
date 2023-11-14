@@ -41,9 +41,9 @@ minio = "^7.2.0"
 
 
 [tool.poetry.group.infer.dependencies]
-torch = {version = "^2.1.0+cpu", source = "pytorch-cpu"}
-torchvision = {version = "^0.16.0+cpu", source = "pytorch-cpu"}
-torchaudio = {version = "^2.1.0+cpu", source = "pytorch-cpu"}
+torch = {version = "^2.1.0+cpu", source = "pytorch-cpu", markers = "sys_platform == 'linux' or sys_platform == 'win32'"}
+torchvision = {version = "^0.16.0+cpu", source = "pytorch-cpu", markers = "sys_platform == 'linux' or sys_platform == 'win32'"}
+torchaudio = {version = "^2.1.0+cpu", source = "pytorch-cpu", markers = "sys_platform == 'linux' or sys_platform == 'win32'"}
 openmim = "^0.3.9"
 minio = "^7.2.0"
 pycocotools = "^2.0.7"
