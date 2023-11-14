@@ -1,5 +1,5 @@
 from minio import Minio
-from pydantic import SecretStr
+from pydantic import SecretStr, BaseModel
 from pydantic_settings import BaseSettings
 
 
@@ -10,13 +10,19 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-minioClient = Minio(
-    "chart-minio.default.svc.cluster.local",
+minio_client = Minio(
+    "chart-minio:9000",
     access_key=settings.minio_user,
     secret_key=settings.minio_password.get_secret_value(),
+    secure=False
 )
 
-found = minioClient.bucket_exists("images")
-if not found:
-    minioClient.make_bucket("images")
+def create_bucket(minio_client: Minio, bucket_name: str) -> str:
+    bucket_exist = minio_client.bucket_exists(bucket_name)
+    if not bucket_exist:
+        minio_client.make_bucket(bucket_name)
+    
+    return f"LOG - Bucket Exists: {bucket_name}"
+
+#def upload_file_to_bucket_fd()
 

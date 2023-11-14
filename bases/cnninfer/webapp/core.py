@@ -24,6 +24,10 @@ class ExperimentResponse(BaseModel):
 async def health_check() -> dict[str, str]:
     return {"status": "ok"}
 
+@app.post("/storage/initialize")
+def initialize_coco_dataset_subset() -> str:
+    msg = core.prepare_inference_experiment.send()
+    return msg.get_result(timeout=10_000, block=True)
 
 @app.post("/greet")
 def greet_users(names: list[str]) -> list[str]:
