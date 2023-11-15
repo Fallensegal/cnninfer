@@ -1,4 +1,4 @@
-from cnninfer.dto import dto
+from cnninfer.dto import coco
 
-__all__ = ["dto"]
+__all__ = ["coco"]
 

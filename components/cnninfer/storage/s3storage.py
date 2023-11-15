@@ -1,4 +1,6 @@
 from minio import Minio
+from io import BytesIO
+import requests
 from pydantic import SecretStr, BaseModel
 from pydantic_settings import BaseSettings
 
@@ -26,8 +28,20 @@ def create_bucket(minio_client: Minio, bucket_name: str) -> str:
     return f"LOG - Bucket Exists: {bucket_name}"
 
 
-def upload_file_from_stream(minio_client: Minio, bucket_name: str) -> None:
-    ...
+def upload_file_from_bytes(
+    minio_client: Minio,
+    bucket_name: str,
+    object_name: str,
+    file_content: bytes,
+    content_length: int,
+) -> None:
+    minio_client.put_object(
+        bucket_name=bucket_name,
+        object_name=object_name,
+        data=BytesIO(file_content),
+        length=content_length,
+        content_type="application/octet-stream",
+    )
 
 
 def upload_file_from_fs(
@@ -36,7 +50,9 @@ def upload_file_from_fs(
     minio_client.fput_object(bucket_name, obj_name, file_path)
 
 
-def download_file_from_bucket(minio_client: Minio, bucket_name: str, object_name: str) -> None:
+def download_file_from_bucket(
+    minio_client: Minio, bucket_name: str, object_name: str
+) -> None:
     ...
 
 
