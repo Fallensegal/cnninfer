@@ -12,39 +12,27 @@ from components.cnninfer.coco.api import (
 )
 
 from components.cnninfer.dto.coco import (
-    COCOImage,
-    COCOImageID,
+    COCOInferResults,
+    COCODataset,
     COCOImageURL,
     COCOImageName,
 )
-from components.cnninfer.dto.coco import COCODataset
 
 infer_dataset: list[COCODataset] = []
-
-@dramatiq.actor(store_results=True)
-def get_first_url() -> str:
-    return f"{infer_dataset[0].img_url}"
-
-
-@dramatiq.actor(store_results=True)
-def hello(name: str) -> str:
-    saved_string = f"Hello {name}"
-    print(saved_string)
-    return saved_string
-
-
-@dramatiq.actor(store_results=True)
-def prepare_coco_dataset(num_pictures: int) -> str:
-    buckets = [
+BUCKETS: list[str] = [
         "preimages",
         "postimages-frcnn",
         "postimages-srcnn",
         "postimages-detr",
-    ]
+        "eval-graphs"
+]
+
+@dramatiq.actor(store_results=True)
+def prepare_coco_dataset(num_pictures: int) -> str:
 
     [
         s3storage.create_bucket(s3storage.minio_client, bucket_name)
-        for bucket_name in buckets
+        for bucket_name in BUCKETS
     ]
 
     # Upload COCO Dataset to Bucket
@@ -75,6 +63,18 @@ def prepare_coco_dataset(num_pictures: int) -> str:
 
     return "Bucket Image Init Successful"
 
+@dramatiq.actor(store_results=True)
+def infer_and_calculate_results() -> COCOInferResults:
+    #download images from coco
+    #Send them through each model
+    #Upload bboxed images to buckets
+    #Take results and store them in a datastructure
+    #Calculate some form of mean precision
+    #Create graphs, upload them to bucket
+    ...
+
+@dramatiq.actor(store_results=True)
+def infer_images(coco_urls: list[COCOImageURL], model: )
 
 """
 @dramatiq.actor
