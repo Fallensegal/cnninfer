@@ -12,6 +12,7 @@ packages = [
     {include = "cnninfer/storage",from = "components"},
     {include = "cnninfer/coco",from = "components"},
     {include = "cnninfer/dto",from = "components"},
+    {include = "cnninfer/mmdetinfer",from = "components"},
 ]
 
 [tool.poetry.dependencies]

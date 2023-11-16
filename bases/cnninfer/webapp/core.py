@@ -18,6 +18,11 @@ def greet_users(names: list[str]) -> list[str]:
     g = group([tasks.hello.send("Wasif"), tasks.hello.send("Tory")]).run()
     return g.get_results(timeout=10_000, block=True)
 
+@coco_router.get("/annotation/size")
+def get_first_annotation_size() -> str:
+    msg = tasks.get_first_url.send()
+    return msg.get_result(timeout=100_000, block=True)
+
 @storage_router.post("/initialize")
 def initialize_coco_dataset(num_pictures: int) -> str:
     msg = tasks.prepare_coco_dataset.send(num_pictures=num_pictures)
