@@ -1,3 +1,6 @@
+# PDF
+*.pdf
+
 # Minio
 .DS_Store
 # NO ZIP

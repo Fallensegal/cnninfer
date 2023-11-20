@@ -1,7 +1,20 @@
-from mmdet.apis import DetInferencer
 
-sparse_rcnn = DetInferencer("sparse-rcnn_r50_fpn_1x_coco", device="cpu")
-detr = DetInferencer("ddq-detr-4scale_r50_8xb2-12e_coco", device="cpu")
-faster_rcnn = DetInferencer("faster-rcnn_r50_fpn_1x_coco", device="cpu")
+from cnninfer.dto.coco import COCOModelMeta
 
+sparse_rcnn_meta = COCOModelMeta(
+    name="srcnn",
+    s3_bucket="postimages-srcnn",
+    savefile_dir="./srcnn"
+)
 
+faster_rcnn_meta = COCOModelMeta(
+    name="frcnn",
+    s3_bucket="postimages-frcnn",
+    savefile_dir="./frcnn"
+)
+
+detr_meta = COCOModelMeta(
+    name="detr",
+    s3_bucket="postimages-detr",
+    savefile_dir="./detr"
+)

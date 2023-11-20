@@ -13,14 +13,23 @@ coco_router = APIRouter(prefix="/coco", tags=["coco"])
 async def health_check() -> dict[str, str]:
     return {"status": "ok"}
 
+@app.get("/flush")
+def flush_broker() -> bool:
+    try:
+        broker.flush_all()
+        return True
+    except:
+        return False
+
+
 @app.post("/greet")
 def greet_users(names: list[str]) -> list[str]:
     g = group([tasks.hello.send("Wasif"), tasks.hello.send("Tory")]).run()
     return g.get_results(timeout=10_000, block=True)
 
-@coco_router.get("/annotation/size")
-def get_first_annotation_size() -> str:
-    msg = tasks.get_first_url.send()
+@coco_router.get("/coco/infer")
+def perform_inference() -> str:
+    msg = tasks.infer_and_calculate_results_pipeline.send()
     return msg.get_result(timeout=100_000, block=True)
 
 @storage_router.post("/initialize")
