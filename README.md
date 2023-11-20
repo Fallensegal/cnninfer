@@ -174,5 +174,6 @@ The application currently has one api endpoint that will run an inference worklo
     - Inference Engine: [PyTorch](https://pytorch.org/), [MMDetection](https://github.com/open-mmlab/mmdetection)
 
 3. **Dataset**
-    - 2017 COCO Validation Dataset and Annotations ([Object Detection](https://cocodataset.org/#home))
+    - 2017 COCO Validation Dataset and Annotations ([Object Detection](https://cocodataset.org/#home)):
+    - The dataset was obtained using the [PyCOCOTools](https://github.com/cocodataset/cocoapi/tree/master/PythonAPI) library, which is a curl wrapper for the COCO api
 
